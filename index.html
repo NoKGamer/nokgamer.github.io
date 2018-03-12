@@ -9,50 +9,47 @@
 </head>
 <body>
 	<div>
-		<input id="text" />
+		<input id="text" autofocus />
+		<button id="submit" onclick="processSarcasm()">Generate</button>
 	</div>
 	<div id="sarcasm"></div>
 </body>
 </html>
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <script type="text/javascript">
-	$(function() {
-		sarcasm = [];
+	$(function (){
+		$("#text").keyup(function(event) {
+			if (event.keyCode === 13) {
+				$("#submit").click();
+			}
+		});
+	});
+	function processSarcasm(){
+		text = $("#text").val()
 		icount = 2;
 		ucount = 2;
 		bcount = 2;
-		console.log("ready");
-		$("#text").keydown(function(event){
-			event.preventDefault();
-			if (event.keyCode >= 65 && event.keyCode <= 90){
-				i = Math.floor((Math.random() * icount) + 1) % icount == 0;
-				u = Math.floor((Math.random() * ucount) + 1) % ucount == 0;
-				b = Math.floor((Math.random() * bcount) + 1) % bcount == 0;
-				letter = event.key
-				if (!i){
-					icount = 2;
-				} else icount += 1
-				if (!u){
-					ucount = 2;
-				} else ucount += 1
-				if (!b){
-					bcount = 2;
-				} else bcount += 1
-				if (u) letter = letter.toUpperCase();
-				sarcasm.push({key: letter, i: i, b: b});
-				this.value += event.key
-			}
-			if (event.keyCode == 8){
-				sarcasm.pop();
-				this.value=this.value.slice(0, -1)
-			}
-			if (event.keyCode == 32){
-				this.value += " ";
-				sarcasm.push({key: " ", i: false});
-			}
-			printSarcasm(sarcasm);
-		});
-	});
+		sarcasm = [];
+		for (l = 0; l < text.length; l++) {
+			i = Math.floor((Math.random() * icount) + 1) % icount == 0;
+			u = Math.floor((Math.random() * ucount) + 1) % ucount == 0;
+			b = Math.floor((Math.random() * bcount) + 1) % bcount == 0;
+			letter = text[l]
+			if (!i){
+				icount = 2;
+			} else icount += 1;
+			if (!u){
+				ucount = 2;
+			} else ucount += 1;
+			if (!b){
+				bcount = 2;
+			} else bcount += 1;
+			if (u) letter = letter.toUpperCase();
+			sarcasm.push({key: letter, i: i, b: b});
+			this.value += event.key;
+		}
+		printSarcasm(sarcasm)
+	}
 	
 	function printSarcasm(s){
 		html = "";
