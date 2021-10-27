@@ -11,6 +11,7 @@
 	<div>
 		<input id="text" autofocus />
 		<button id="submit" onclick="processSarcasm()">Generate</button>
+		<button id="submit" onclick="processAlternate()">Alternate</button>
 	</div>
 	<div id="sarcasm"></div>
 </body>
@@ -24,6 +25,21 @@
 			}
 		});
 	});
+	function processAlternate(){
+		text = $("#text").val();
+		u = true;
+		sarcasm = [];
+		for (l = 0; l < text.length; l++) {
+			letter = text[l];
+			if (u) {
+				letter = letter.toUpperCase();
+				u = !u;
+			}
+			sarcasm.push({key: letter, i: false, b: false});
+		}
+		printSarcasm(sarcasm);
+		copyFormatted($("#sarcasm").html());
+	}
 	function processSarcasm(){
 		text = $("#text").val();
 		icount = 2;
@@ -34,7 +50,7 @@
 			i = Math.floor((Math.random() * icount) + 1) % icount == 0;
 			u = Math.floor((Math.random() * ucount) + 1) % ucount == 0;
 			b = Math.floor((Math.random() * bcount) + 1) % bcount == 0;
-			letter = text[l]
+			letter = text[l];
 			if (!i){
 				icount = 2;
 			} else icount += 1;
@@ -48,8 +64,8 @@
 			sarcasm.push({key: letter, i: i, b: b});
 			this.value += event.key;
 		}
-		printSarcasm(sarcasm)
-		copyFormatted($("#sarcasm").html())
+		printSarcasm(sarcasm);
+		copyFormatted($("#sarcasm").html());
 	}
 	
 	function printSarcasm(s){
