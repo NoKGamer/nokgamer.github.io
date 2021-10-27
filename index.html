@@ -31,10 +31,8 @@
 		sarcasm = [];
 		for (l = 0; l < text.length; l++) {
 			letter = text[l];
-			if (u) {
-				letter = letter.toUpperCase();
-				u = !u;
-			}
+			if (u) letter = letter.toUpperCase();
+			u = !u;
 			sarcasm.push({key: letter, i: false, b: false});
 		}
 		printSarcasm(sarcasm);
